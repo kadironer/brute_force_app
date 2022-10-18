@@ -22,38 +22,16 @@ class _HomePageState extends State<HomePage> {
   var tfThree= TextEditingController();
   var sifreler=[];
 
-  //oluşturulacak dosya yolu
-  Future<String> get klasorYolu async{
-    Directory klasor=await getApplicationDocumentsDirectory();
-    print("Klasör Yolu: "+klasor.path);
-    return klasor.path;
-  }
-  //dosya oluşturma
-  Future<File> get dosyaOlustur async{
-    var olusanDosya =await klasorYolu;
-    return File(olusanDosya+"/sifreler.txt");
-  }
-
-  Future<File> dosyayaYaz() async{
-    var myDosya=await dosyaOlustur;
-    return myDosya.writeAsString(sifreler.toString());
-  }
 
   Future<void> islemYap() async{
-
-
     var uniqueArr =<String>[];
-
 
     uniqueArr.addAll(tfOne.text.split(''));
     uniqueArr.addAll(tfTwo.text.split(''));
     uniqueArr.addAll(tfThree.text.split(''));
 
-
     var seen = <String>{};
     List<String> uniquelist = uniqueArr.where((value) => seen.add(value)).toList();
-
-    var unlu = <String>["a", "e", "ı", "i", "o", "ö", "u", "ü"];
 
     for (var i=0; i<uniquelist.length; i++){
       if(i !=uniquelist.length-1){
@@ -73,8 +51,6 @@ class _HomePageState extends State<HomePage> {
                   String text=a+b+c+d+e;
                   sifreler.add(text);
                   sifreler.sort();
-                  m=m+4;
-                  print(text);
                 }
               }
             }
@@ -217,9 +193,7 @@ class _HomePageState extends State<HomePage> {
                     )
                   ),
                   onPressed: (){
-                    dosyaOlustur;
                     islemYap();
-
                   },
                   child: const Text("Tahminleri Göster"),
                 ),
